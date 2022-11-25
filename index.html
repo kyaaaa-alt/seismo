@@ -113,8 +113,8 @@
 
           <div class="alert alert-warning p-1 ps-2 alert-dismissible fade show mt-0" role="alert">
             <small><a type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Baca Panduan</a> dan aktifkan mode suara</small>
-            <button type="button" class="btn-close p-2" data-bs-dismiss="alert" aria-label="Close"></button>
+              Baca Panduan</a> dan Aktifkan Mode Suara!</small>
+            <button type="button" class="btn-close p-2" style="margin-top: -1px;" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
 
           <div id="settings">
@@ -139,6 +139,10 @@
             </div>
           </div>
 
+          <div class="text-center" style="display: none;" id="reload">
+            <button type="button" id="startBtn" onclick="window.location.reload()" class="w-75 me-2 btn-success btn"><i class="bi bi-arrow-clockwise"></i> Reload/Muat Ulang</button>
+          </div>
+          
           <textarea class="col-xs-12 form-control" id="error-message" rows="7"
             style="margin-top: 10px !important;margin-bottom: 10px;" placeholder="Log area..." disabled></textarea>
           <div class="text-center">
@@ -208,6 +212,15 @@
     $('#aktif').hide();
 
     var md = new MobileDetect(window.navigator.userAgent);
+    if (md.os() == 'iOS') { 
+      warn('Perangkat anda tidak didukung saat ini! Saat ini belum bisa digunakan pada PC/Desktop dan iPhone/iPad/iOS');
+      warn('');
+      warn('Silahkan untuk menggunakan HP Android!');
+      $('#settings').hide();
+      $('.btn').hide();
+      $('.alert').hide();
+    }
+
     var menu = false;
     if (menu) {
       $('#menu').show();
@@ -242,42 +255,48 @@
             if (!isAvailable.accelerationAvailable) {
               logger({ message: 'Siap digunakan!' });
               logger({ message: 'Silahkan Klik Tombol "Start" untuk memulai' });
+              if ('wakeLock' in navigator) {
+                isSupported = true;
+                warn('Perangkat anda mendukung WakeLock!');
+              } else {
+                wakeButton.disabled = true;
+                warn('Perangkat anda tidak mendukung WakeLock, harap menggunakan google chrome terbaru!');
+              }
+
+              let wakeLock = null;
+              async function wL() {
+                try {
+                  wakeLock = await navigator.wakeLock.request('screen');
+                  warn('WakeLock Ok!');
+                } catch (err) {
+                  console.log(`${err.name}, ${err.message}`);
+                }
+              }
+              wL()
             } else {
-              logger({ message: 'Sensor gyro acceleration tidak terdeteksi pada perangkat anda, harap muat ulang (reload) halaman ini.' });
+              logger({ message: 'Gagal mendeteksi sensor gyro pada perangkat anda!' });
+              logger({ message: 'Silahkan Reload/Muat Ulang Halaman Situs Ini!' });
+              logger({ message: 'Atau Klik Tombol Reload Di Atas' });
               // window.location.reload();
               $('#settings').hide();
+              $('#reload').show();
             }
           } else {
-            logger({ message: 'Perangkat anda tidak didukung, saat ini belum bisa digunakan pada perangkat Dekstop/PC & belum bisa pada iPhone/iPad/iOS' });
+            warn('Perangkat anda tidak didukung saat ini! Saat ini belum bisa digunakan pada PC/Desktop dan iPhone/iPad/iOS');
+            warn('');
+            warn('Silahkan untuk menggunakan HP Android!');
             $('#settings').hide();
             $('.btn').hide();
+            $('.alert').hide();
           }
         } else {
-          logger({ message: 'Perangkat anda tidak didukung, saat ini belum bisa digunakan pada perangkat Dekstop/PC & belum bisa pada iPhone/iPad/iOS' });
+          warn('Perangkat anda tidak didukung saat ini! Saat ini belum bisa digunakan pada PC/Desktop dan iPhone/iPad/iOS');
+          warn('');
+          warn('Silahkan untuk menggunakan HP Android!');
           $('#settings').hide();
           $('.btn').hide();
+          $('.alert').hide();
         }
-
-        if ('wakeLock' in navigator) {
-          isSupported = true;
-          warn('Perangkat anda mendukung WakeLock!');
-        } else {
-          wakeButton.disabled = true;
-          warn('Perangkat anda tidak mendukung WakeLock, harap menggunakan google chrome terbaru!');
-        }
-
-        let wakeLock = null;
-        async function wL() {
-          // create an async function to request a wake lock
-          try {
-            wakeLock = await navigator.wakeLock.request('screen');
-            warn('WakeLock Ok!');
-          } catch (err) {
-            // The Wake Lock request has failed - usually system related, such as battery.
-            console.log(`${err.name}, ${err.message}`);
-          }
-        }
-        wL()
 
         // start_gn();
 
