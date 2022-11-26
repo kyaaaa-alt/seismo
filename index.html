@@ -4,189 +4,175 @@
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <title>Earthquake Early Warning</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
-  <script src="gyronorm.complete.min.js"></script>
+  <link href="custom.css" rel="stylesheet">
   <script src="mobile-detect.js"></script>
-  <style type="text/css">
-    body {
-      background-color: #283039;
-    }
-
-    .container {
-      margin-top: 20px;
-    }
-
-    .tab-pane {
-      margin-top: 15px;
-    }
-
-    .page-header {
-      margin-top: 20px;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-
-    }
-
-    input[type=text],
-    textarea {
-      box-shadow: none;
-      -webkit-appearance: none;
-      -webkit-box-shadow: none !important;
-      -moz-box-shadow: none !important;
-      box-shadow: none !important;
-      font-size: 15px !important;
-    }
-
-    .col-xs-12 {
-      color: #fff !important;
-      background-color: #282c34 !important;
-    }
-
-    #dm .input-group {
-      float: left;
-      padding-left: 10px;
-    }
-
-    #dm .input-group.first {
-      padding-left: 0px;
-    }
-
-    #dm .col-xs-12 {
-      padding-left: 0;
-    }
-  
-    .infoarea {
-      font-size: 12px !important;
-    }
-    .form-select {
-      background-color: #030303 !important;
-      color: #bbbbbb;
-    }
-    p {
-      line-height: normal;
-    }
-   
-  </style>
-
+  <script src="NoSleep.min.js"></script>
 </head>
 
-<body onload="init_gn()">
-
+<body>
   <div class="container">
+    <div class="mt-3 mb-3">
 
-    <div role="tabpanel">
-      <!-- Nav tabs -->
-      <ul id="menu" class="nav nav-pills" role="tablist">
-        <li role="presentation"><a href="#do" aria-controls="do" role="tab" data-toggle="tab">Orientation</a></li>
-        <li role="presentation"><a href="#dm" aria-controls="dm" role="tab" data-toggle="tab">Motion</a></li>
-        <li role="presentation" class="active"><a href="#logs" aria-controls="logs" role="tab"
-            data-toggle="tab">Logs</a></li>
-      </ul>
+      <div class="d-flex align-items-center">
+        <div class="p-2 bg-danger rounded me-2" style="margin-top: 16px;">
+          <i class="bi bi-heart-pulse text-light" style="font-size: 25px;"></i>
+        </div>
+        <h5 class="text-white mt-2">
+          Earthquake Early Warning
+        </h5>
+      </div>
 
-      <!-- Tab panes -->
-      <div class="tab-content">
+      <span id="jam" class="badge" style="margin-top: -18px;margin-left: 43px;"></span>
+    </div>
 
-        <div role="tabpanel" class="tab-pane" id="do">
+    <div class="alert alert-warning p-2 ps-3 alert-dismissible fade show mt-0" role="alert">
+      <small><a type="button" class="text-primary" data-bs-toggle="modal"
+          data-bs-target="#exampleModal"><strong><i class="bi bi-info-circle"></i>
+            Baca Panduan</strong></a> & Aktifkan Mode Suara!</small>
+      <button type="button" class="btn-close p-2" style="margin-top: 3px;" data-bs-dismiss="alert"
+        aria-label="Close"></button>
+    </div>
 
-          <input type="button" onclick="set_head_gn()" value="Set Head Direction" class="col-xs-12 btn-warning btn" />
+    <div id="settings">
+      <div class="text-center d-flex justify-content-between">
+        <button type="button" id="startBtn" class="w-100 me-2 btn-success btn btn-lg rounded-pill"><i class="bi bi-play-circle"></i> START</button>
+        <button type="button" id="stopBtn" class="w-100 btn-danger btn btn-lg rounded-pill"><i
+            class="bi bi-stop-circle"></i> STOP</button>
+      </div>
+      <div class="text-center mt-3 mb-3">
+        <span id="aktif" class="badge text-bg-success rounded-pill p-2 px-4">ALARM AKTIF</span>
+        <span id="tidakaktif" class="badge text-bg-danger rounded-pill p-2 px-4">ALARM TIDAK AKTIF</span>
+      </div>
+      <div id="sens">
+        <label for="sele" class="text-white mb-1">Pilih tingkat sensitivitas getaran.</label>
+        <select id="sele" class="form-select col-xs-12">
+          <option value="1">[Level 1] Sangat Sensitif</option>
+          <option value="2">[Level 2] Sensitif</option>
+          <option value="3">[Level 3] Normal</option>
+          <option value="4">[Level 4] Sensitif Sedang</option>
+          <option value="5">[Level 5] Sensitif Rendah</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="text-center" style="display: none;" id="reload">
+      <button type="button" id="startBtn" onclick="window.location.reload()" class="w-75 me-2 btn-success btn"><i
+          class="bi bi-arrow-clockwise"></i> Reload/Muat Ulang</button>
+    </div>
+    <div class="col-xs-12 canvas-container">
+      <canvas id="canvas" width="640" height="100"></canvas>
+    </div>
+    <textarea class="col-xs-12 form-control" id="error-message" rows="3"
+      style="margin-top: 10px !important;margin-bottom: 10px;" placeholder="Log area..." disabled></textarea>
+    <div class="text-center">
+      <div class="d-flex justify-content-center mt-3">
+        <div>
+          <button type="button" class="btn btn-sm btn-outline-secondary btn text-white px-3 me-1" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"><i class="bi bi-info-circle"></i> Panduan</button>
+        </div>
+        <div>
+          <button type="button" class="btn btn-sm btn-outline-secondary btn text-white px-3 ms-1" data-bs-toggle="modal"
+            data-bs-target="#logModal"><i class="bi bi-clock-history"></i> Riwayat</button>
+        </div>
+      </div>
+      
+      <div class="mt-4">
+        <p class="text-white">#SemogaLekasPulih #PrayForCianjur</p>
+        <a href="https://kitabisa.com/campaign/jqruntukcianjur" target="_blank" type="button"
+          class="btn btn-success btn-md px-4 rounded-pill"><i class="bi bi-box2-heart"></i> Donasi Untuk
+          Cianjur</a>
+        <p class="text-white-50 mt-1" style="font-size: 10px;">Donasi Jabar Quick Response melalui kitabisa.com
+        </p>
+
+        <div class="d-flex justify-content-center mt-3">
+          <button type="button" class="btn btn-outline-secondary btn-sm mx-1" data-bs-toggle="modal"
+            data-bs-target="#donasiKolbyart">Donasi Via @kolbyart</button>
+          <!-- <a href="https://saweria.co/kolbyart" target="_blank" type="button"
+            class="btn btn-outline-secondary btn-sm mx-1">Donasi Via @kolbyart</a> -->
+          <a href="https://nauf.space/donate" target="_blank" type="button"
+            class="btn btn-outline-secondary btn-sm mx-1">Donasi Developer</a>
 
         </div>
-        <div role="tabpanel" class="tab-pane" id="dm">
 
-        </div>
-        <div role="tabpanel" class="tab-pane active" id="logs">
-          <div class="text-center mt-2 mb-3">
-            <h4 class="text-white"><i class="bi bi-heart-pulse"></i> Earthquake Early
-              Warning</h4>
-            <span id="jam" class="badge" style="margin-top: -5px;"></span>
+
+      </div>
+    </div>
+    <div class="mb-4"></div>
+    <div class="text-center mb-4">
+      <small class="text-white-50" style="font-size: 11px;">Develop by <a class="text-decoration-none text-white"
+          href="https://nauf.space/" target="_blank">M Naufal Azkia</a> - <a
+          class="text-decoration-none text-white" href="https://makenewstory.com" target="_blank">Make New
+          Story</a></small>
+      <small class="text-white-50 d-block" style="font-size: 10px;">v1.2.0</small>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="donasiKolbyart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered container">
+      <div class="modal-content">
+        <div class="modal-body bg-dark rounded justify-content-between">
+
+          <h6 class="text-white text-center">a/n Kolby Dzikrullah Ambiya</h6>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="BCA 1831436731" aria-label="BCA 1831436731"
+              aria-describedby="button-addon2" disabled>
+            <input type="text" value="1831436731" class="myInput" hidden>
+            <button onclick="myFunction(event)" class="btn btn-secondary" type="button" id="button-addon2"><i
+                class="bi bi-clipboard-check"></i>
+              Salin</button>
           </div>
 
-          <div class="alert alert-warning p-1 ps-2 alert-dismissible fade show mt-0" role="alert">
-            <small><a type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Baca Panduan</a> dan Aktifkan Mode Suara!</small>
-            <button type="button" class="btn-close p-2" style="margin-top: -1px;" data-bs-dismiss="alert" aria-label="Close"></button>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Mandiri 1820001175520"
+              aria-label="Mandiri 1820001175520" aria-describedby="button-addon2" disabled>
+            <input type="text" value="1820001175520" class="myInput" hidden>
+            <button onclick="myFunction(event)" class="btn btn-secondary" type="button" id="button-addon2"><i
+                class="bi bi-clipboard-check"></i>
+              Salin</button>
+          </div>
+          <div class="d-flex justify-content-between">
+            <a href="https://saweria.co/kolbyart" class="btn btn-secondary col-5" type="button" target="_blank"><i
+                class="bi bi-wallet"></i> Via
+              Saweria</a>
+            <a href="https://www.paypal.com/paypalme/kolbyart" class="btn btn-secondary col-5" type="button"
+              target="_blank"><i class="bi bi-paypal"></i> Via
+              PayPal</a>
           </div>
 
-          <div id="settings">
-            <div class="text-center d-flex justify-content-between">
-              <button type="button" id="startBtn" onclick="start_gn()" class="w-100 me-2 btn-success btn"><i class="bi bi-play-btn"></i> START</button>
-              <button type="button" id="stopBtn" onclick="stop_gn()" class="w-100 btn-danger btn"><i class="bi bi-stop-btn"></i> STOP</button>
-            </div>
-            <div class="text-center mt-2 mb-3">
-              <span id="aktif" class="badge text-bg-success">ALARM
-                AKTIF</span>
-              <span id="tidakaktif" class="badge text-bg-warning">ALARM TIDAK AKTIF</span>
-            </div>
-            <div id="sens">
-              <label for="sele" class="text-white mb-1">Pilih tingkat sensitivitas getaran.</label>
-              <select id="sele" class="form-select col-xs-12">
-                <option value="1">[Level 1] Sangat Sensitif</option>
-                <option value="2">[Level 2] Sensitif</option>
-                <option value="3">[Level 3] Normal</option>
-                <option value="4">[Level 4] Sensitif Sedang</option>
-                <option value="5">[Level 5] Kurang Sensitif</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="text-center" style="display: none;" id="reload">
-            <button type="button" id="startBtn" onclick="window.location.reload()" class="w-75 me-2 btn-success btn"><i class="bi bi-arrow-clockwise"></i> Reload/Muat Ulang</button>
-          </div>
-          
-          <textarea class="col-xs-12 form-control" id="error-message" rows="7"
-            style="margin-top: 10px !important;margin-bottom: 10px;" placeholder="Log area..." disabled></textarea>
-          <div class="text-center">
-            <div class="mt-3">
-              <button type="button" class="btn btn-primary btn text-white" data-bs-toggle="modal"
-                data-bs-target="#exampleModal"><i class="bi bi-book"></i> Panduan</button>
-            </div>
-            <div class="mt-4">
-              <p class="text-white">#SemogaLekasPulih #PrayForCianjur</p>
-              <div class="d-flex justify-content-between">
-<a href="https://kitabisa.com/campaign/jqruntukcianjur" type="button" class="btn btn-success btn-sm"><i class="bi bi-cash-stack"></i> Donasi u/Cianjur</a>
-              <a href="https://nauf.space/donate" type="button" class="btn btn-success btn-sm ms-2"><i class="bi bi-cash-stack"></i> Donasi u/Developer</a>
-              <a href="https://saweria.co/kolbyart" type="button" class="btn btn-success btn-sm ms-2"><i class="bi bi-cash-stack"></i> Donasi u/Smoofil</a>
-              </div>
-              
-
-            </div>
-          </div>
-          <div class="mb-4"></div>
-          <div class="text-center mb-4">
-            <small class="text-white-50" style="font-size: 12px;">Develop by <a class="text-decoration-none text-white"
-                href="https://nauf.space/">M Naufal
-                Azkia</a></small>
+          <div class="mt-3" style="text-align: right;">
+            <a class="btn btn-danger btn-sm" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> Tutup</a>
           </div>
 
         </div>
       </div>
-
     </div>
-
   </div>
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog container">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable container">
       <div class="modal-content">
-        <div class="modal-body" style="background-color: #1d1d1d !important;padding:10px;border: 1px solid gray;">
-          <p style="color:#fff;">Situs ini menggunakan Sensor Gyroscope Accelerometer pada perangkat HP atau tablet anda. jika sensor mendeteksi getaran, maka akan muncul suara peringatan.</p>
+        <div class="modal-body bg-dark rounded">
+          <p style="color:#fff;">Situs ini menggunakan Sensor Gyroscope Accelerometer pada perangkat HP atau tablet
+            anda. jika sensor mendeteksi getaran, maka akan muncul suara peringatan.</p>
 
-            <p style="color:#fff;"><b>Cara menggunakan : </b>sebelum anda menekan Tombol "START", Simpan HP anda di dekat anda, di tempat yang mudah terguncang, bisa juga simpan HP dengan posisi miring bersandar kesebuah benda yang mudah terguncang. setelah disimpan, pastikan handphone tidak bergerak sama sekali, lalu klik tombol "START"</p>
+          <p style="color:#fff;"><b>Cara menggunakan : </b><br>Sebelum anda menekan Tombol "START", Simpan HP anda di dekat
+            anda, di tempat yang mudah terguncang, bisa juga simpan HP dengan posisi miring bersandar kesebuah benda
+            yang mudah terguncang. setelah disimpan, pastikan handphone tidak bergerak sama sekali, lalu klik tombol
+            "START"</p>
 
-            <p style="color:#fff;"><b>Penting : Alarm tidak akan berfungsi apabila smartphone dalam keadaan Screenlock / Layar Terkunci / Layar Mati. </b><br>Untuk mencegah hal itu aktifkan di pengaturan Stay Awake / Tetap Bangun / Tetap Terjaga pada hp anda. maka hp anda tidak akan terkunci selagi anda charger hp anda. pengaturan ini tersembunyi pada menu "Opsi Pengembang/Developer Option" Silahkan google search cara buka pengaturan "Opsi Pengembang/Developer Option" pada handphone anda</p>
+          <p style="color:#fff;"><b>Penting</b> : <br>Alarm tidak akan berfungsi apabila HP dalam keadaan membuka Aplikasi Lain, dan Layar mati karena Screenlock atau Layar Terkunci. Maka dari itu biarkan posisi hp anda sedang membuka situs ini (tidak dalam posisi halaman lain/aplikasi lain) Redupkan cahaya layar anda (bukan matikan layar/kunci layar) agar tidak terlalu menguras baterai, lalu "START" alarm anda!<br></p>
 
-            <p style="color:#fff;"><b>Gunakan browser google chrome terbaru!</p>
+          <p style="color:#fff;"><b>Gunakan browser google chrome terbaru!</p>
           <div style="text-align: center;">
             <a class="btn btn-danger" data-bs-dismiss="modal">Tutup</a>
           </div>
@@ -196,260 +182,44 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="logModal" tabindex="-1" aria-labelledby="logModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable container">
+      <div class="modal-content">
+        <div class="modal-body bg-dark rounded p-2">
+          <p class="text-white text-center mt-2" style="font-size: 18px;font-weight:500;"><i class="bi bi-clock-history"></i> Riwayat</p>
+          <textarea class="col-xs-12 form-control border-0" id="history" rows="10" style="margin-top: 10px !important;margin-bottom: 10px;" placeholder="Riwayat kosong..." disabled></textarea>
+          <div style="text-align: right;">
+            <a class="btn btn-danger btn-sm" onclick="clearHistory()"><i class="bi bi-trash"></i> Hapus Riwayat</a>
+            <a class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</a>
+          </div>
 
-  <audio id="ping" src="warning2.mp3" loop muted></audio>
-  <script type="text/javascript">
-    $('#stopBtn').attr('disabled', true);
-    $('#startBtn').attr('disabled', false);
+        </div>
+      </div>
+    </div>
+  </div>
 
-    function displayClock() {
-      var display = new Date().toLocaleString('id-ID');
-      $('#jam').html(display)
-      setTimeout(displayClock, 1000);
-    }
-    displayClock()
-    $('#tidakaktif').show();
-    $('#aktif').hide();
-
-    var md = new MobileDetect(window.navigator.userAgent);
-    if (md.os() == 'iOS') { 
-      warn('Perangkat anda tidak didukung saat ini! Saat ini belum bisa digunakan pada PC/Desktop dan iPhone/iPad/iOS');
-      warn('');
-      warn('Silahkan untuk menggunakan HP Android!');
-      $('#settings').hide();
-      $('.btn').hide();
-      $('.alert').hide();
-    }
-
-    var menu = false;
-    if (menu) {
-      $('#menu').show();
-    } else {
-      $('#menu').hide();
-    }
-
-    var gn;
-
-    function init_gn() {
-      var args = {
-        logger: logger
-      };
-
-      gn = new GyroNorm();
-
-      gn.init(args).then(function () {
-        var isAvailable = gn.isAvailable();
-        // if(!isAvailable.deviceOrientationAvailable) {
-        //   logger({message:'Device orientation is not available.'});
-        // } 
-
-        // if(!isAvailable.accelerationAvailable && !isAvailable.accelerationIncludingGravityAvailable) {
-        //   logger({message:'Device acceleration is not available.'});
-        // } 
-
-        // if(!isAvailable.rotationRateAvailable) {
-        //   logger({message:'Device rotation rate is not available.'});
-        // } 
-        if (md.mobile() != null || md.phone() != null || md.tablet() != null || md.os() != null) {
-          if (md.os() != 'iOS') {
-            if (!isAvailable.accelerationAvailable) {
-              logger({ message: 'Siap digunakan!' });
-              logger({ message: 'Silahkan Klik Tombol "Start" untuk memulai' });
-              if ('wakeLock' in navigator) {
-                isSupported = true;
-                warn('Perangkat anda mendukung WakeLock!');
-              } else {
-                wakeButton.disabled = true;
-                warn('Perangkat anda tidak mendukung WakeLock, harap menggunakan google chrome terbaru!');
-              }
-
-              let wakeLock = null;
-              async function wL() {
-                try {
-                  wakeLock = await navigator.wakeLock.request('screen');
-                  warn('WakeLock Ok!');
-                } catch (err) {
-                  console.log(`${err.name}, ${err.message}`);
-                }
-              }
-              wL()
-            } else {
-              logger({ message: 'Gagal mendeteksi sensor gyro pada perangkat anda!' });
-              logger({ message: 'Silahkan Reload/Muat Ulang Halaman Situs Ini!' });
-              logger({ message: 'Atau Klik Tombol Reload Di Atas' });
-              // window.location.reload();
-              $('#settings').hide();
-              $('#reload').show();
-            }
-          } else {
-            warn('Perangkat anda tidak didukung saat ini! Saat ini belum bisa digunakan pada PC/Desktop dan iPhone/iPad/iOS');
-            warn('');
-            warn('Silahkan untuk menggunakan HP Android!');
-            $('#settings').hide();
-            $('.btn').hide();
-            $('.alert').hide();
-          }
-        } else {
-          warn('Perangkat anda tidak didukung saat ini! Saat ini belum bisa digunakan pada PC/Desktop dan iPhone/iPad/iOS');
-          warn('');
-          warn('Silahkan untuk menggunakan HP Android!');
-          $('#settings').hide();
-          $('.btn').hide();
-          $('.alert').hide();
-        }
-
-        // start_gn();
-
-      }).catch(function (e) {
-
-        console.log(e);
-
-      });
-    }
-
-    function logger(data) {
-      $('#error-message').append(data.message + "\n");
-    }
-
-    function warn(data) {
-      $('#error-message').append(data + "\n");
-    }
-
-    function stop_gn() {
-      gn.stop();
-      ping.muted = true;
-      ping.pause();
-      ping.currentTime = 0;
-      warn('[STOP] Alarm Non Aktif!')
-      $('#error-message').scrollTop($('#error-message')[0].scrollHeight);
-      $('#sens').show();
-      $('#tidakaktif').show();
-      $('#aktif').hide();
-      $('#stopBtn').attr('disabled', true);
-      $('#startBtn').attr('disabled', false);
-    }
+  <!-- Modal -->
+  <div class="modal fade" id="iOSModal" tabindex="-1" aria-labelledby="iOSModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable container">
+      <div class="modal-content">
+        <div class="modal-body bg-dark rounded">
+          <p style="color:#fff;font-size: 17px;line-height: 1.3;">iOS Terdeteksi! Ketika anda tekan start nanti, harap izinkan situs ini untuk membaca sensor Gyro Acceleration pada handphone anda. baca panduan untuk selengkapnya! klik OK untuk melanjutkan</p>
+          <div style="text-align: center;">
+            <a class="btn btn-primary w-25" data-bs-dismiss="modal" onclick="pingiOS()">OK !</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-    function start_gn() {
-      $('#error-message').attr('placeholder', 'Loading...');
-      $('#error-message').html('');
-      $('#stopBtn').attr('disabled', false);
-      $('#startBtn').attr('disabled', true);
-      const start_alert = setTimeout(() => {
-        gn.start(gnCallBack);
-        warn('[START] Alarm Aktif!')
-        $('#tidakaktif').hide();
-        $('#aktif').show();
-        $('#error-message').scrollTop($('#error-message')[0].scrollHeight);
-        if (start_alert) clearTimeout(start_alert);
-      }, 500)
-      $('#sens').hide();
-    }
-
-
-
-    function gnCallBack(data) {
-      $('#do_alpha').val(data.do.alpha);
-      $('#do_beta').val(data.do.beta);
-      $('#do_gamma').val(data.do.gamma);
-
-      $('#dm_x').val(data.dm.x);
-      $('#dm_y').val(data.dm.y);
-      $('#dm_z').val(data.dm.z);
-
-      $('#dm_gx').val(data.dm.gx);
-      $('#dm_gy').val(data.dm.gy);
-      $('#dm_gz').val(data.dm.gz);
-
-      $('#dm_alpha').val(data.dm.alpha);
-      $('#dm_beta').val(data.dm.beta);
-      $('#dm_gamma').val(data.dm.gamma);
-
-      // currValue.push(data.do.alpha + data.do.gamma)
-      // var measure = data.dm.x + data.dm.y
-      // $('#curr').html(measure)
-      // warn(data.dm.x + ', ' + data.dm.y + ', ' + data.dm.z + ', ')
-      if ($('#sele').val() == '1') {
-        var x = -0.3;
-        var y = -0.3;
-        var z = -0.4;
-        var px = 0.3;
-        var py = 0.3;
-        var pz = 0.4;
-      } else if ($('#sele').val() == '2') {
-        var x = -0.6;
-        var y = -0.6;
-        var z = -0.7;
-        var px = 0.6;
-        var py = 0.6;
-        var pz = 0.7;
-      } else if ($('#sele').val() == '3') {
-        var x = -0.9;
-        var y = -0.9;
-        var z = -1.0;
-        var px = 0.9;
-        var py = 0.9;
-        var pz = 1.0;
-      } else if ($('#sele').val() == '4') {
-        var x = -1.2;
-        var y = -1.2;
-        var z = -1.3;
-        var px = 1.2;
-        var py = 1.2;
-        var pz = 1.0;
-      } else if ($('#sele').val() == '5') {
-        var x = -1.5;
-        var y = -1.5;
-        var z = -1.6;
-        var px = 1.5;
-        var py = 1.5;
-        var pz = 1.6;
-      }
-      if (parseFloat(x) >= parseFloat(data.dm.x) || parseFloat(y) >= parseFloat(data.dm.y) || parseFloat(z) >= parseFloat(data.dm.z) || parseFloat(px) <= parseFloat(data.dm.x) || parseFloat(py) <= parseFloat(data.dm.y) || parseFloat(pz) <= parseFloat(data.dm.z)) {
-        warn(new Date().toLocaleString('id-ID') + ' : Terjadi Getaran!')
-        // warn(new Date().toLocaleString('id-ID') + ' : Terjadi Getaran' + parseFloat(data.dm.x) + ' | ' + parseFloat(data.dm.y) + ' | ' + parseFloat(data.dm.z))
-        $('#error-message').scrollTop($('#error-message')[0].scrollHeight);
-        ping.muted = true;
-        ping.pause();
-        ping.currentTime = 0;
-        ping.muted = false;
-        ping.volume = 1;
-        ping.play();
-      }
-    }
-
-    function norm_gn() {
-      gn.normalizeGravity(true);
-    }
-
-    function org_gn() {
-      gn.normalizeGravity(false);
-    }
-
-    function set_head_gn() {
-      gn.setHeadDirection();
-    }
-
-    function showDO() {
-      $('#do').show();
-      $('#dm').hide();
-      $('#btn-dm').removeClass('selected');
-      $('#btn-do').addClass('selected');
-    }
-
-    function showDM() {
-      $('#dm').show();
-      $('#do').hide();
-      $('#btn-do').removeClass('selected');
-      $('#btn-dm').addClass('selected');
-    }
-
-
-
-  </script>
+  <audio id="ping" src="warning2.mp3" loop></audio>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+  crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+  
 </body>
 
 </html>

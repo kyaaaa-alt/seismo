@@ -1,0 +1,94 @@
+body {
+    background-color: #151619;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
+
+  ::placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+  .canvas-container {
+    margin-top: 10px;
+    display: none;
+    border-radius: 5px !important;
+    padding: 3px;
+  }
+  #canvas {
+      width: 100%;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+
+  .tab-pane {
+    margin-top: 15px;
+  }
+
+  .page-header {
+    margin-top: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+
+  }
+
+  input[type=text],
+  textarea {
+    box-shadow: none;
+    -webkit-appearance: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: 15px !important;
+  }
+
+  .col-xs-12 {
+    color: #fff !important;
+    background-color: #282c34 !important;
+  }
+
+  #dm .input-group {
+    float: left;
+    padding-left: 10px;
+  }
+
+  #dm .input-group.first {
+    padding-left: 0px;
+  }
+
+  #dm .col-xs-12 {
+    padding-left: 0;
+  }
+
+  .infoarea {
+    font-size: 12px !important;
+  }
+
+  .form-select {
+    background-color: #030303 !important;
+    color: #bbbbbb;
+  }
+
+  p {
+    line-height: normal;
+    font-size: 14px;
+    font-family:Arial, Helvetica, sans-serif;
+  }
+  b {
+    font-size:15px;
+  }
+  a {
+    text-decoration: none;
+  }
+  textarea:disabled {
+    color:#fff !important;
+    -webkit-text-fill-color: #fff!important;
+    opacity: 1 !important;/* required on iOS */
+  }
