@@ -1,8 +1,20 @@
 var ping = document.getElementById("ping");
 ping.pause()
-function pingiOS() {
+function iOS() {
   ping.play();
   ping.pause();
+  ping.currentTime = 0;
+  if (DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") {
+    DeviceMotionEvent.requestPermission().then( response => {
+      if (response == "denied") {
+        const deniedModal = new bootstrap.Modal('#deniedModal', {
+          keyboard: false,
+          backdrop: 'static'
+        })
+        deniedModal.show();
+      } 
+    })
+  }
 }
 $('#stopBtn').attr('disabled', true);
 $('#startBtn').attr('disabled', false);
@@ -24,11 +36,23 @@ function logger(data) {
 }
 
 if (md.os() == 'iOS') {
-  const myModal = new bootstrap.Modal('#iOSModal', {
-    keyboard: false,
-    backdrop: 'static'
-  })
-  myModal.show();
+  if (DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") {
+    DeviceMotionEvent.requestPermission().then( response => {
+      if (response == "denied") {
+        const deniedModal = new bootstrap.Modal('#deniedModal', {
+          keyboard: false,
+          backdrop: 'static'
+        })
+        deniedModal.show();
+      } 
+    }).catch((err) => {
+      const requestModal = new bootstrap.Modal('#requestModal', {
+        keyboard: false,
+        backdrop: 'static'
+      })
+      requestModal.show();
+    });
+  } 
 }
 
 var canvas = document.getElementById('canvas');
@@ -90,13 +114,9 @@ if (md.mobile() != null || md.phone() != null || md.tablet() != null || md.os() 
     var noSleep = new NoSleep();
     startBtn.onclick = function(e) {
         e.preventDefault();
-        // Request permission for iOS 13+ devices
-        if (
-            DeviceMotionEvent &&
-            typeof DeviceMotionEvent.requestPermission === "function"
-        ) {
-            DeviceMotionEvent.requestPermission();
-        }
+        ping.play();
+        ping.pause();
+        ping.currentTime = 0;
         noSleep.enable();
         $('#error-message').attr('placeholder', 'Loading...');
         $('#error-message').html('');
@@ -105,6 +125,7 @@ if (md.mobile() != null || md.phone() != null || md.tablet() != null || md.os() 
         const startEvent = setTimeout(() => {
           window.addEventListener("devicemotion", gyroAcceleration, false);
           logger('[START] Alarm Aktif!')
+          logger(document.getElementsByTagName('select')[0].selectedOptions[0].text)
           $('#tidakaktif').hide();
           $('#aktif').show();
           $('#error-message').scrollTop($('#error-message')[0].scrollHeight);
@@ -181,9 +202,6 @@ function gyroAcceleration(event) {
     }
     if (parseFloat(x) >= parseFloat(event.acceleration.x) || parseFloat(y) >= parseFloat(event.acceleration.y) || parseFloat(z) >= parseFloat(event.acceleration.z) || parseFloat(px) <= parseFloat(event.acceleration.x) || parseFloat(py) <= parseFloat(event.acceleration.y) || parseFloat(pz) <= parseFloat(event.acceleration.z)) {
       if (ping.paused) {
-        
-        
-        
         ping.volume = 1;
         ping.play();
         const alert = new Date().toLocaleString('id-ID') + ' : Terjadi Getaran!'
@@ -203,8 +221,6 @@ function gyroAcceleration(event) {
         $('#history').append(alert + "\n");
         // const getHistory = JSON.parse(localStorage.getItem("history"))
         // logger(JSON.stringify(getHistory));
-        
-        
       }
     }
     // document.getElementById('x').innerHTML = event.acceleration.x;
