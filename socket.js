@@ -26,7 +26,16 @@ socket.on('tews', function (data) {
     }
     history.push(unified)
     localStorage.setItem("history", JSON.stringify(history));
+    logger(unified)
     $('#history').append(unified + "\n");
+    // ping.volume = 1;
+    // ping.play();
+    // // noSleep.enable();
+    // $('#error-message').attr('placeholder', 'Loading...');
+    // $('#error-message').html('');
+    // $('#stopBtn').attr('disabled', false);
+    // $('#startBtn').attr('disabled', true);
+    // logger(unified)
     console.log('Data Terakhir')
     console.log(maps)
     console.log(newDateTime)
