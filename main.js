@@ -364,11 +364,6 @@ if (localStorage.getItem("history") !== null) {
   }
 }
 
-function clearHistory() {
-  localStorage.clear();
-  $('#history').val('')
-}
-
 const logModal = document.getElementById('logModal')
 logModal.addEventListener('shown.bs.modal', function (event) {
   $('#history').scrollTop($('#history')[0].scrollHeight);
@@ -393,3 +388,17 @@ bmkgModal.addEventListener('shown.bs.modal', function (event) {
   });
 })
 
+if (localStorage.getItem("expDate") === null) {
+  localStorage.setItem('expDate', new Date(Date.now() + 2 * 86400000).setDate(new Date(Date.now() + 2 * 86400000).getDate()));
+} else {
+  const currDate = new Date(Date.now()).setDate(new Date(Date.now()).getDate());
+  if (Number(currDate) > Number(localStorage.getItem("expDate"))) {
+    localStorage.clear();
+    $('#history').val('')
+  } else {
+    localStorage.setItem('expDate', new Date(Date.now() + 2 * 86400000).setDate(new Date(Date.now() + 2 * 86400000).getDate()));
+  }
+}
+
+const expDate = new Date(Number(localStorage.getItem("expDate")))
+$('#expdate').html(expDate.toLocaleString('id-ID'))
