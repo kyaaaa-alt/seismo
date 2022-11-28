@@ -19,10 +19,10 @@ setInterval(()=> {
             const date = dateTime.split(' ')[0]
             const time = dateTime.split(' ')[1].split('.')[0]
             const newDateFormat = new Date(Date.UTC(date.split('-')[0], date.split('-')[1], date.split('-')[2], time.split(':')[0], time.split(':')[1], time.split(':')[2]));
-            const newDateTime = newDateFormat.toLocaleString('id-ID') + ' ' + time
+            const newDateTime = newDateFormat.toLocaleString('id-ID')
             const place = result.properties.place
-            const unified = newDateTime + ' : ' + mag + ' Kedalaman:' + depth + ' ' + place + '. ' + maps;
-            const withoutMaps = newDateTime + ' : ' + mag + ' Kedalaman:' + depth + ' ' + place 
+            const unified = newDateTime + ' : ' + mag + ' Kedalaman: ' + depth + ' Lokasi: ' + place + '. ' + maps;
+            const withoutMaps = newDateTime + ' : ' + mag + ' Kedalaman:' + depth + ' Lokasi: ' + place 
             var history = [];
             if (localStorage.getItem("history") !== null) {
                 var get = JSON.parse(localStorage.getItem("history"));
@@ -41,7 +41,7 @@ setInterval(()=> {
             ping.play();
             $('#error-message').attr('placeholder', 'Loading...');
             $('#error-message').html('');
-            logger(new Date().toLocaleString('id-ID') + ' : [BMKG Real-Time Warning]')
+            logger('[BMKG Real-Time Warning]')
             logger(withoutMaps)
             logger(maps)
         }
