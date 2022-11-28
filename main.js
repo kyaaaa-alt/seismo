@@ -86,6 +86,12 @@ if (md.os() == 'iOS') {
       requestModal.show();
     });
   } 
+} else if (md.os() == null) {
+  const initModal = new bootstrap.Modal('#initModal', {
+    keyboard: false,
+    backdrop: 'static'
+  })
+  initModal.hide();
 } else {
   const initModal = new bootstrap.Modal('#initModal', {
     keyboard: false,
