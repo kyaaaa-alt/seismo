@@ -1,6 +1,11 @@
+var warning = document.getElementById("warning");
 var ping = document.getElementById("ping");
-ping.pause()
+var noSleep = new NoSleep();
+
 function iOS() {
+  warning.play();
+  warning.pause();
+  warning.currentTime = 0;
   ping.play();
   ping.pause();
   ping.currentTime = 0;
@@ -15,7 +20,35 @@ function iOS() {
       } 
     })
   }
+  noSleep.enable();
 }
+
+
+function android() {
+  warning.play();
+  warning.pause();
+  warning.currentTime = 0;
+  ping.play();
+  ping.pause();
+  ping.currentTime = 0;
+  noSleep.enable();
+}
+
+function panduan() {
+  warning.play();
+  warning.pause();
+  warning.currentTime = 0;
+  ping.play();
+  ping.pause();
+  ping.currentTime = 0;
+  noSleep.enable();
+  const panduanModal = new bootstrap.Modal('#panduanModal', {
+    keyboard: false,
+    backdrop: 'static'
+  })
+  panduanModal.show();
+}
+
 $('#stopBtn').attr('disabled', true);
 $('#startBtn').attr('disabled', false);
 
@@ -53,6 +86,12 @@ if (md.os() == 'iOS') {
       requestModal.show();
     });
   } 
+} else {
+  const initModal = new bootstrap.Modal('#initModal', {
+    keyboard: false,
+    backdrop: 'static'
+  })
+  initModal.show();
 }
 
 var canvas = document.getElementById('canvas');
@@ -111,13 +150,12 @@ if (md.mobile() != null || md.phone() != null || md.tablet() != null || md.os() 
     
     let startBtn = document.getElementById("startBtn");
     let stopBtn = document.getElementById("stopBtn");
-    var noSleep = new NoSleep();
+    
     startBtn.onclick = function(e) {
         e.preventDefault();
-        ping.play();
-        ping.pause();
-        ping.currentTime = 0;
-        noSleep.enable();
+        warning.play();
+        warning.pause();
+        warning.currentTime = 0;
         $('#error-message').attr('placeholder', 'Loading...');
         $('#error-message').html('');
         $('#stopBtn').attr('disabled', false);
@@ -137,11 +175,11 @@ if (md.mobile() != null || md.phone() != null || md.tablet() != null || md.os() 
     };
     stopBtn.onclick = function(e) {
         e.preventDefault();
-        ping.pause();
-        ping.currentTime = 0;
+        warning.pause();
+        warning.currentTime = 0;
         $('#error-message').html('');
         logger('[STOP] Alarm Non Aktif!')
-        noSleep.disable();
+        
         $('.canvas-container').hide();
         $('#error-message').scrollTop($('#error-message')[0].scrollHeight);
         $('#sens').show();
@@ -201,10 +239,10 @@ function gyroAcceleration(event) {
       var pz = 1.6;
     }
     if (parseFloat(x) >= parseFloat(event.acceleration.x) || parseFloat(y) >= parseFloat(event.acceleration.y) || parseFloat(z) >= parseFloat(event.acceleration.z) || parseFloat(px) <= parseFloat(event.acceleration.x) || parseFloat(py) <= parseFloat(event.acceleration.y) || parseFloat(pz) <= parseFloat(event.acceleration.z)) {
-      if (ping.paused) {
-        ping.volume = 1;
-        ping.play();
-        const alert = new Date().toLocaleString('id-ID') + ' : Terjadi Getaran!'
+      if (warning.paused) {
+        warning.volume = 1;
+        warning.play();
+        const alert = new Date().toLocaleString('id-ID') + ' : HP Mendeteksi Getaran!'
         logger(alert);
         $('#error-message').scrollTop($('#error-message')[0].scrollHeight);
         // localStorage.clear();
@@ -234,7 +272,7 @@ function tick() {
     if (!isRefresh){
         return;
     }
-    ctx.fillStyle = '#282c34';
+    ctx.fillStyle = '#49574a';
     ctx.fillRect(0, 0, W, H);
     
     drawAxis(5);
@@ -329,3 +367,4 @@ var logModal = document.getElementById('logModal')
 logModal.addEventListener('shown.bs.modal', function (event) {
   $('#history').scrollTop($('#history')[0].scrollHeight);
 })
+

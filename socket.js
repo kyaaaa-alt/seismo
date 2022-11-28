@@ -1,7 +1,7 @@
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
   
-const socket = io("http://localhost:5000", {
-    transports: ["websocket", "polling"]
+const socket = io("https://bmkg-socket.makenewstory.com", {
+    transports: ["polling", "websocket"]
 });
 
 socket.on('tews', function (data) {
@@ -16,7 +16,8 @@ socket.on('tews', function (data) {
     const newDateFormat = new Date(Date.UTC(date.split('-')[0], date.split('-')[1], date.split('-')[2]));
     const newDateTime = newDateFormat.toLocaleDateString('id-ID') + ' ' + time
     const place = result.properties.place
-    const unified = newDateTime + ' : [BMKG] ' + mag + ' Kedalaman:' + depth + ' ' + place + '. Maps: ' + maps;
+    const unified = newDateTime + ' : [BMKG] ' + mag + ' Kedalaman:' + depth + ' ' + place + '. ' + maps;
+    const withoutMaps = newDateTime + ' : [BMKG] ' + mag + ' Kedalaman:' + depth + ' ' + place 
     var history = [];
     if (localStorage.getItem("history") !== null) {
         var get = JSON.parse(localStorage.getItem("history"));
@@ -24,24 +25,25 @@ socket.on('tews', function (data) {
         history.push(get[i])
         }
     }
+    history.push(' ')
     history.push(unified)
     localStorage.setItem("history", JSON.stringify(history));
-    logger(unified)
+    $('#history').append(' ' + "\n");
     $('#history').append(unified + "\n");
-    // ping.volume = 1;
-    // ping.play();
-    // // noSleep.enable();
-    // $('#error-message').attr('placeholder', 'Loading...');
-    // $('#error-message').html('');
-    // $('#stopBtn').attr('disabled', false);
-    // $('#startBtn').attr('disabled', true);
-    // logger(unified)
-    console.log('Data Terakhir')
-    console.log(maps)
-    console.log(newDateTime)
-    console.log(mag)
-    console.log(depth)
-    console.log(place)
+    $('#history').append(' ' + "\n");
+    ping.volume = 1;
+    ping.play();
+    $('#error-message').attr('placeholder', 'Loading...');
+    $('#error-message').html('');
+    logger(new Date().toLocaleString('id-ID') + ' : Notifikasi BMKG')
+    logger(withoutMaps)
+    logger(maps)
+    // console.log('BMKG UPDATE')
+    // console.log(maps)
+    // console.log(newDateTime)
+    // console.log(mag)
+    // console.log(depth)
+    // console.log(place)
 })
 
 setInterval(() => {

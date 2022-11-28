@@ -1,7 +1,75 @@
-body {
-    background-color: #151619;
+  body {
+    background-color: #283028;
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
+  }
+
+  .font-color-custom {
+    color: #d3fcd2 !important;
+  }
+
+  .btn-custom {
+    background-color: #d3fcd2 !important;
+    border: 1px solid #d3fcd2;
+    color: #106014;
+  }
+
+  .btn-custom:hover {
+    background-color: #a9caa9 !important;
+    border: 1px solid #a9caa9;
+    color: #106014;
+  } 
+
+  .btn-custom:disabled {
+    background-color: transparent !important;
+    border: 1px solid #cccccc;
+    color: #ccc;
+  } 
+
+  .btn-outline-custom {
+    background-color: transparent !important;
+    border: 1px solid #d3fcd2;
+    color: #d3fcd2;
+  }
+
+  .btn-outline-custom:hover {
+    background-color: #a9caa9 !important;
+    border: 1px solid #a9caa9;
+    color: #d3fcd2;
+  } 
+
+  .btn-outline-custom:disabled {
+    background-color: transparent !important;
+    border: 1px solid #cccccc;
+    color: #ccc;
+  } 
+
+  .bg-custom {
+    background-color: #d3fcd2 !important;
+    border: 1px solid #d3fcd2;
+    color: #106014;
+  }
+
+  .bg-custom:disabled {
+    background-color: transparent !important;
+    border: 1px solid #cccccc;
+    color: #ccc;
+  } 
+
+  .bg-outline-custom {
+    background-color: transparent !important;
+    border: 1px solid #cccccc;
+    color: #ccc;
+  }
+
+  .fg-custom {
+    color: #106014;
+  }
+  
+  .card-custom {
+    background-color: #283028 !important;
+    border: 1px solid #d3fcd2;
+    color: #106014;
   }
 
   ::placeholder {
@@ -46,12 +114,13 @@ body {
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
-    font-size: 15px !important;
+    font-size: 13px !important;
+    border-color: #93af94 !important;
   }
 
   .col-xs-12 {
-    color: #fff !important;
-    background-color: #282c34 !important;
+    color: #d3fcd2 !important;
+    background-color: #495749 !important;
   }
 
   #dm .input-group {
@@ -72,8 +141,9 @@ body {
   }
 
   .form-select {
-    background-color: #030303 !important;
-    color: #bbbbbb;
+    background-color: #d3fcd2 !important;
+    border-color: #93af94 !important;
+    color: #106014 !important;
   }
 
   p {
@@ -87,8 +157,13 @@ body {
   a {
     text-decoration: none;
   }
+  .text-white {
+    color: #d3fcd2 !important;
+  }
   textarea:disabled {
-    color:#fff !important;
-    -webkit-text-fill-color: #fff!important;
+    color: #d3fcd2 !important;
+    background-color: #495749 !important;
+    -webkit-text-fill-color: #d3fcd2!important;
     opacity: 1 !important;/* required on iOS */
+    border-color: #93af94 !important;
   }
