@@ -1,7 +1,7 @@
   body {
     background-color: #283028;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
+    font-weight: 500 !important;
   }
 
   .font-color-custom {
