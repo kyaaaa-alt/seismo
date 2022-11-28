@@ -13,11 +13,11 @@ socket.on('tews', function (data) {
     const dateTime = result.properties.time
     const date = dateTime.split(' ')[0]
     const time = dateTime.split(' ')[1].split('.')[0]
-    const newDateFormat = new Date(Date.UTC(date.split('-')[0], date.split('-')[1], date.split('-')[2]));
-    const newDateTime = newDateFormat.toLocaleDateString('id-ID') + ' ' + time
+    const newDateFormat = new Date(Date.UTC(date.split('-')[0], date.split('-')[1], date.split('-')[2], time.split(':')[0], time.split(':')[1], time.split(':')[2]));
+    const newDateTime = newDateFormat.toLocaleString('id-ID') + ' ' + time
     const place = result.properties.place
-    const unified = newDateTime + ' : [BMKG] ' + mag + ' Kedalaman:' + depth + ' ' + place + '. ' + maps;
-    const withoutMaps = newDateTime + ' : [BMKG] ' + mag + ' Kedalaman:' + depth + ' ' + place 
+    const unified = newDateTime + ' : ' + mag + ' Kedalaman:' + depth + ' ' + place + '. ' + maps;
+    const withoutMaps = newDateTime + ' : ' + mag + ' Kedalaman:' + depth + ' ' + place 
     var history = [];
     if (localStorage.getItem("history") !== null) {
         var get = JSON.parse(localStorage.getItem("history"));
@@ -26,16 +26,16 @@ socket.on('tews', function (data) {
         }
     }
     history.push(' ')
+    history.push('[BMKG Real-Time Warning]')
     history.push(unified)
     localStorage.setItem("history", JSON.stringify(history));
     $('#history').append(' ' + "\n");
     $('#history').append(unified + "\n");
-    $('#history').append(' ' + "\n");
     ping.volume = 1;
     ping.play();
     $('#error-message').attr('placeholder', 'Loading...');
     $('#error-message').html('');
-    logger(new Date().toLocaleString('id-ID') + ' : Notifikasi BMKG')
+    logger(new Date().toLocaleString('id-ID') + ' : [BMKG Real-Time Warning]')
     logger(withoutMaps)
     logger(maps)
     // console.log('BMKG UPDATE')
@@ -48,4 +48,4 @@ socket.on('tews', function (data) {
 
 setInterval(() => {
     socket.emit('realtime', socket.id)
-}, 500);
+}, 1000);

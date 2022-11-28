@@ -167,3 +167,83 @@
     opacity: 1 !important;/* required on iOS */
     border-color: #93af94 !important;
   }
+
+
+  @keyframes first-wave {
+    0% {
+      -webkit-transform: scale(1);
+      -moz-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1);
+   }
+    100% {
+      -webkit-transform: scale(1.8);
+      -moz-transform: scale(1.8);
+      -ms-transform: scale(1.8);
+      transform: scale(1.8);
+      opacity: 0;
+   }
+ }
+  @keyframes second-wave {
+    0% {
+      -webkit-transform: scale(1);
+      -moz-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1);
+   }
+    100% {
+      -webkit-transform: scale(1.6);
+      -moz-transform: scale(1.6);
+      -ms-transform: scale(1.6);
+      transform: scale(1.6);
+      opacity: 0;
+   }
+ }
+  .bmkg-font {
+    font-size: 12px;
+    color: #106014;
+  }
+  .bg-bmkg {
+    background-color: #f7c74d;
+    border:1px solid #fbc438;
+    color: #106014;
+    font-weight: 600;
+  }
+
+  .pulse-circle {
+    text-align: center;
+    line-height: 40px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #106014;
+    display: block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fbc438;
+ }
+  .pulse-circle::after, .pulse-circle::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fbc438;
+    border-radius: 50%;
+    transform-origin: 50%;
+    opacity: 0.8;
+ }
+  .pulse-circle::after {
+    -webkit-animation: first-wave 1.8s linear 0.1s infinite;
+    -moz-animation: first-wave 1.8s linear 0.1s infinite;
+    animation: first-wave 1.8s linear 0.1s infinite;
+ }
+  .pulse-circle::before {
+    -webkit-animation: second-wave 1.8s linear 0.8s infinite;
+    -moz-animation: second-wave 1.8s linear 0.8s infinite;
+    animation: second-wave 1.8s linear 0.8s infinite;
+ }
+  

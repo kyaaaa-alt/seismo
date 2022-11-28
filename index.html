@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
-  <link href="custom.css?v=1.3.3" rel="stylesheet">
+  <link href="custom.css?v=1.3.4" rel="stylesheet">
   <script src="mobile-detect.js"></script>
   <script src="NoSleep.min.js"></script>
 </head>
@@ -61,7 +61,7 @@
     <div class="col-xs-12 canvas-container border-0">
       <canvas id="canvas" width="640" height="100"></canvas>
     </div>
-    <textarea class="col-xs-12 form-control" id="error-message" rows="5"
+    <textarea class="col-xs-12 form-control" id="error-message" rows="6"
       style="margin-top: 10px !important;margin-bottom: 10px;" placeholder="Log area..." disabled></textarea>
     <div class="text-center">
       <div class="d-flex justify-content-center mt-3">
@@ -73,6 +73,10 @@
           <button type="button" class="btn btn-sm btn-custom btn px-3 ms-1" data-bs-toggle="modal"
             data-bs-target="#logModal"><i class="bi bi-clock-history"></i> Riwayat</button>
         </div>
+      </div>
+      <div class="mt-3">
+        <button type="button" class="btn btn-sm btn-outline-custom btn px-3" data-bs-toggle="modal"
+          data-bs-target="#bmkgModal"><i class="bi bi-activity"></i> Gempabumi Dirasakan</button>
       </div>
       
       <div class="mt-4">
@@ -94,7 +98,7 @@
     <div class="text-center mb-4 mt-1">
       <small class="text-white" style="font-size: 11px;">Made with ❤️ by <a class="text-decoration-none text-white fw-bold"
           href="https://nauf.space/" target="_blank">M Naufal Azkia</a></small>
-      <small class="text-white d-block" style="font-size: 10px;">v1.3.3</small>
+      <small class="text-white d-block" style="font-size: 10px;">v1.3.4</small>
     </div>
   </div>
 
@@ -183,14 +187,40 @@
     </div>
   </div>
 
+  <!-- BMKG Modal -->
+  <div class="modal fade" id="bmkgModal" tabindex="-1" aria-labelledby="bmkgModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable container">
+      <div class="modal-content">
+        <div class="modal-body card-custom rounded p-0">
+          <!-- <p class="text-white text-center my-3" style="font-size: 18px;font-weight:500;"><i class="bi bi-activity"></i> Gempabumi Dirasakan</p> -->
+          <div class="text-center"><img id="shakemap" src="" class="w-75 p-2"></div>
+          <div class="d-flex justify-content-center mx-3 my-2">
+            <div id="mag" class="pulse-circle"></div>
+            <div id="datetime" class="bg-bmkg border-1 bmkg-font text-center p-1 rounded mx-2"></div>
+            <div id="depth" class="bg-bmkg border-1 bmkg-font text-center p-1 rounded"></div>
+          </div>
+          <div class="mx-3 my-2">
+            <p class="text-light mt-2 px-5"> 
+              <span id="area"></span><br/>
+              <span id="felt"></span>
+              <br/><br/>
+              <small class="mt-2" style="font-size:11px;">Data ini tidak real-time, sumber data ini direlease bmkg pada <span id="timesent"></span></small>
+            </p>
+          </div>
+          <div class="text-center"><a class="btn btn-custom btn-sm mb-2 mt-1 mb-3" data-bs-dismiss="modal">Tutup</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <audio id="ping" src="ping.mp3"></audio>
   <audio id="warning" src="warning2.mp3" loop></audio>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
   crossorigin="anonymous"></script>
-  <script src="main.js?v=1.3.3"></script>
-  <script type="module" src="socket.js?v=1.3.3"></script>
+  <script src="main.js?v=1.3.4"></script>
+  <script type="module" src="socket.js?v=1.3.4"></script>
 </body>
 
 </html>

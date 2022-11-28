@@ -363,8 +363,27 @@ function clearHistory() {
   $('#history').val('')
 }
 
-var logModal = document.getElementById('logModal')
+const logModal = document.getElementById('logModal')
 logModal.addEventListener('shown.bs.modal', function (event) {
   $('#history').scrollTop($('#history')[0].scrollHeight);
+})
+
+const bmkgModal = document.getElementById('bmkgModal')
+bmkgModal.addEventListener('shown.bs.modal', function (event) {
+  fetch(`https://bmkg-content-inatews.storage.googleapis.com/datagempa.json?t=${Date.now()}`, {
+    Method: 'GET',
+  }).then((response) => response.json()).then((result) => {
+      $('#shakemap').attr('src', 'https://data.bmkg.go.id/DataMKG/TEWS/' + result.info.shakemap)
+      $('#mag').html('M' + result.info.magnitude)
+      $('#datetime').html(result.info.date + '<br>' + result.info.time)
+      $('#depth').html(result.info.depth + '<br> Kedalaman')
+      $('#area').html(result.info.area)
+      $('#felt').html('')
+      let felt = result.info.felt.split(',')
+      for(var i = 0; i < felt.length; i++) {
+        $('#felt').append(`<span class="mt-2 px-2 me-1 badge bg-warning bmkg-font">${felt[i]}</span>`)
+      }$('#timesent').html(result.info.timesent)
+
+  });
 })
 
