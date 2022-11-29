@@ -374,7 +374,7 @@ bmkgModal.addEventListener('shown.bs.modal', function (event) {
   fetch(`https://bmkg-content-inatews.storage.googleapis.com/datagempa.json?t=${Date.now()}`, {
     Method: 'GET',
   }).then((response) => response.json()).then((result) => {
-      $('#shakemap').attr('src', 'https://data.bmkg.go.id/DataMKG/TEWS/' + result.info.shakemap)
+      $('#shakemap').attr('src', 'https://bmkg-content-inatews.storage.googleapis.com/' + result.info.shakemap)
       $('#mag').html('M' + result.info.magnitude)
       $('#datetime').html(result.info.date + '<br>' + result.info.time)
       $('#depth').html(result.info.depth + '<br> Kedalaman')
@@ -402,3 +402,9 @@ if (localStorage.getItem("expDate") === null) {
 
 const expDate = new Date(Number(localStorage.getItem("expDate")))
 $('#expdate').html(expDate.toLocaleString('id-ID'))
+
+function stopWarn() {
+  warning.pause();
+  warning.currentTime = 0;
+  $('#warnBtn').hide();
+}
