@@ -21,7 +21,7 @@ setInterval(()=> {
             const bmkgLink = `https://inatews.bmkg.go.id/web/detail2?name=${data.eventid}`
             const mag = 'M' + data.mag
             const depth = data.dalam + 'KM'
-            fetch(`https://bmkg-content-inatews.storage.googleapis.com/history.bmg2022xjxx.txt`, {
+            fetch(`https://bmkg-content-inatews.storage.googleapis.com/history.${id}.txt`, {
                 Method: 'POST',
             }).then((response) => response.text()).then((data) => {
                 const regex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi;
