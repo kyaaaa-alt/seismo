@@ -1,4 +1,5 @@
 let currentTimeStamp = null
+let localDate = null
 var x2js = new X2JS();
 fetch(`https://bmkg-content-inatews.storage.googleapis.com/live30event.xml?t=${Date.now()}`, {
     Method: 'GET',
@@ -15,15 +16,22 @@ setInterval(()=> {
         const timeStamp = data.waktu
         if (currentTimeStamp != timeStamp) {
             currentTimeStamp = timeStamp
+            const id = data.eventid
             const maps = `https://google.com/maps/place/${data.lintang},${data.bujur}/@${data.lintang},${data.bujur},9.25z`
             const bmkgLink = `https://inatews.bmkg.go.id/web/detail2?name=${data.eventid}`
             const mag = 'M' + data.mag
             const depth = data.dalam + 'KM'
-            const dateTime = data.waktu
-            const date = dateTime.split(' ')[0]
-            const time = dateTime.split('  ')[1].split('.')[0]
-            const newDateFormat = new Date(Date.UTC(date.split('/')[0], date.split('/')[1], date.split('/')[2], time.split(':')[0], time.split(':')[1], time.split(':')[2]));
-            const newDateTime = newDateFormat.toLocaleString('id-ID') + ' (Waktu Lokal)'
+            fetch(`https://bmkg-content-inatews.storage.googleapis.com/history.bmg2022xjxx.txt`, {
+                Method: 'POST',
+            }).then((response) => response.text()).then((data) => {
+                const regex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi;
+                const match = data.match(regex)
+                const dateTimeTmp = match[match.length - 1]
+                const utcFmt = "YYYY-MM-DD HH:mm:ss";
+                const localFmt = 'DD MMM YYYY HH:mm:ss';
+                const m = moment.utc(dateTimeTmp, utcFmt);
+                localDate = m.local().locale('id').format(localFmt)
+            })
             const place = data.area
             
             if (place == 'Java, Indonesia' && Number(data.mag) > 2) {
@@ -51,8 +59,8 @@ setInterval(()=> {
                         || loc == 'Sukabumi' 
                         || loc == 'Baros' 
                         ) {
-                            const unified = newDateTime + '\n' + 'Cianjur/Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
-                            const withoutMaps = newDateTime + '\n' + 'Cianjur/Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth;
+                            const unified = localDate + ' (Waktu Lokal)\n' + 'Cianjur / Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
+                            const withoutMaps = localDate + ' (Waktu Lokal)\n' + 'Cianjur / Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth;
                             var history = [];
                             if (localStorage.getItem("history") !== null) {
                                 var get = JSON.parse(localStorage.getItem("history"));
@@ -75,9 +83,18 @@ setInterval(()=> {
                             logger('[BMKG Real-Time Warning]')
                             logger(withoutMaps)
                             logger(bmkgLink)
+
+                            const notificationData = localDate + ' (Waktu Lokal) | ' + 'Cianjur Sukabumi' + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
+                            if (md.os() != 'iOS') {
+                                fetch(`https://4171-103-247-196-158.ap.ngrok.io/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                                    Method: 'GET',
+                                }).then((response) => response.json()).then((data) => {
+                                    console.log(data, notificationData)
+                                })
+                            }
                         } else {
-                            const unified = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
-                            const withoutMaps = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
+                            const unified = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
+                            const withoutMaps = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
                             var history = [];
                             if (localStorage.getItem("history") !== null) {
                                 var get = JSON.parse(localStorage.getItem("history"));
@@ -99,10 +116,19 @@ setInterval(()=> {
                             logger('[BMKG Real-Time Warning]')
                             logger(withoutMaps)
                             logger(bmkgLink)
+
+                            const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
+                            if (md.os() != 'iOS') {
+                                fetch(`https://4171-103-247-196-158.ap.ngrok.io/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                                    Method: 'GET',
+                                }).then((response) => response.json()).then((data) => {
+                                    console.log(data, notificationData)
+                                })
+                            }
                         }
                     } else {
-                        const unified = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
-                        const withoutMaps = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
+                        const unified = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
+                        const withoutMaps = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
                         var history = [];
                         if (localStorage.getItem("history") !== null) {
                             var get = JSON.parse(localStorage.getItem("history"));
@@ -124,12 +150,22 @@ setInterval(()=> {
                         logger('[BMKG Real-Time Warning]')
                         logger(withoutMaps)
                         logger(bmkgLink)
+
+                        const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
+                        if (md.os() != 'iOS') {
+                            fetch(`https://4171-103-247-196-158.ap.ngrok.io/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                                Method: 'GET',
+                            }).then((response) => response.json()).then((data) => {
+                                console.log(data, notificationData)
+                            })
+                        }
                     }
-                    console.log('Data geoname : ' + data)
+                    console.log('Data geoname : ')
+                    console.log(data)
                 }).catch((error) => {
                     console.error('Error:', error);
-                    const unified = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
-                    const withoutMaps = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
+                    const unified = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
+                    const withoutMaps = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
                     var history = [];
                     if (localStorage.getItem("history") !== null) {
                         var get = JSON.parse(localStorage.getItem("history"));
@@ -151,10 +187,19 @@ setInterval(()=> {
                     logger('[BMKG Real-Time Warning]')
                     logger(withoutMaps)
                     logger(bmkgLink)
+
+                    const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
+                    if (md.os() != 'iOS') {
+                        fetch(`https://4171-103-247-196-158.ap.ngrok.io/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                            Method: 'GET',
+                        }).then((response) => response.json()).then((data) => {
+                            console.log(data, notificationData)
+                        })
+                    }
                 });
             } else {
-                const unified = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
-                const withoutMaps = newDateTime + '\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
+                const unified = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
+                const withoutMaps = localDate + ' (Waktu Lokal)\n' + place + ', ' + mag + ', Kedalaman: ' + depth;
                 var history = [];
                 if (localStorage.getItem("history") !== null) {
                     var get = JSON.parse(localStorage.getItem("history"));
@@ -176,11 +221,21 @@ setInterval(()=> {
                 logger('[BMKG Real-Time Warning]')
                 logger(withoutMaps)
                 logger(bmkgLink)
+
+                const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
+                if (md.os() != 'iOS') {
+                    fetch(`https://4171-103-247-196-158.ap.ngrok.io/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                        Method: 'GET',
+                    }).then((response) => response.json()).then((data) => {
+                        console.log(data, notificationData)
+                    })
+                }
             }
-            // console.log('==UPDATE==')
+            console.log('==UPDATE==')
+            console.log('localdate ' + localDate)
         }
         // console.log(currentTimeStamp)
         // console.log(timeStamp)
-        // console.log('====')
     });
 }, 1000)
+

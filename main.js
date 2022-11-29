@@ -53,7 +53,7 @@ $('#stopBtn').attr('disabled', true);
 $('#startBtn').attr('disabled', false);
 
 function displayClock() {
-  var display = new Date().toLocaleString('id-ID');
+  var display = new Date().toLocaleString('en-GB');
   $('#jam').html(display)
   setTimeout(displayClock, 1000);
 }
@@ -248,7 +248,7 @@ function gyroAcceleration(event) {
       if (warning.paused) {
         warning.volume = 1;
         warning.play();
-        const alert = new Date().toLocaleString('id-ID') + ' : HP Mendeteksi Getaran!'
+        const alert = new Date().toLocaleString('en-GB') + ' : HP Mendeteksi Getaran!'
         logger(alert);
         $('#error-message').scrollTop($('#error-message')[0].scrollHeight);
         // localStorage.clear();
@@ -393,7 +393,7 @@ if (localStorage.getItem("expDate") === null) {
 } else {
   const currDate = new Date(Date.now()).setDate(new Date(Date.now()).getDate());
   if (Number(currDate) > Number(localStorage.getItem("expDate"))) {
-    localStorage.clear();
+    localStorage.removeItem('history');
     $('#history').val('')
   } else {
     localStorage.setItem('expDate', new Date(Date.now() + 2 * 86400000).setDate(new Date(Date.now() + 2 * 86400000).getDate()));
@@ -401,10 +401,25 @@ if (localStorage.getItem("expDate") === null) {
 }
 
 const expDate = new Date(Number(localStorage.getItem("expDate")))
-$('#expdate').html(expDate.toLocaleString('id-ID'))
+$('#expdate').html(expDate.toLocaleString('en-GB'))
 
 function stopWarn() {
   warning.pause();
   warning.currentTime = 0;
   $('#warnBtn').hide();
+}
+
+if (md.os() != 'iOS') {
+  const beamsClient = new PusherPushNotifications.Client({
+    instanceId: "075f9bae-fc37-448c-a63d-aac8338831ea",
+  });
+  
+  beamsClient.start().then((beamsClient) => beamsClient.getDeviceId())
+    .then((deviceId) => {
+      beamsClient.addDeviceInterest(deviceId)
+      beamsClient.addDeviceInterest("broadcast")
+      localStorage.setItem('deviceId', deviceId);
+    }).then(() => beamsClient.getDeviceInterests())
+    .then((interests) => console.log("Current interests:", interests))
+    .catch(console.error);
 }
