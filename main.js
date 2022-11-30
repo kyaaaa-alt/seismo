@@ -395,9 +395,8 @@ if (localStorage.getItem("expDate") === null) {
   if (Number(currDate) > Number(localStorage.getItem("expDate"))) {
     localStorage.removeItem('history');
     $('#history').val('')
-  } else {
     localStorage.setItem('expDate', new Date(Date.now() + 2 * 86400000).setDate(new Date(Date.now() + 2 * 86400000).getDate()));
-  }
+  } 
 }
 
 const expDate = new Date(Number(localStorage.getItem("expDate")))
