@@ -86,7 +86,7 @@ setInterval(()=> {
 
                             const notificationData = localDate + ' (Waktu Lokal) | ' + 'Cianjur Sukabumi' + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
                             if (md.os() != 'iOS') {
-                                fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                                fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}/bmkg`, {
                                     Method: 'GET',
                                 }).then((response) => response.json()).then((data) => {
                                     console.log(data, notificationData)
@@ -119,7 +119,7 @@ setInterval(()=> {
 
                             const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
                             if (md.os() != 'iOS') {
-                                fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                                fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}/bmkg`, {
                                     Method: 'GET',
                                 }).then((response) => response.json()).then((data) => {
                                     console.log(data, notificationData)
@@ -153,7 +153,7 @@ setInterval(()=> {
 
                         const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
                         if (md.os() != 'iOS') {
-                            fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                            fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}/bmkg`, {
                                 Method: 'GET',
                             }).then((response) => response.json()).then((data) => {
                                 console.log(data, notificationData)
@@ -190,7 +190,7 @@ setInterval(()=> {
 
                     const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
                     if (md.os() != 'iOS') {
-                        fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                        fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}/bmkg`, {
                             Method: 'GET',
                         }).then((response) => response.json()).then((data) => {
                             console.log(data, notificationData)
@@ -224,7 +224,7 @@ setInterval(()=> {
 
                 const notificationData = localDate + ' (Waktu Lokal) | ' + place + ' | ' + mag.replace('.', ',') + ' | Kedalaman: ' + depth;
                 if (md.os() != 'iOS') {
-                    fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}`, {
+                    fetch(`https://eew.nauf.space/pusher_notif/${notificationData}/${id}/${localStorage.getItem('deviceId')}/bmkg`, {
                         Method: 'GET',
                     }).then((response) => response.json()).then((data) => {
                         console.log(data, notificationData)
