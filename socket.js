@@ -64,8 +64,8 @@ setInterval(()=> {
                         || loc == 'Baros' 
                         ) {
                             if (Number(magnitude) > 2) {
-                                const unified = localDate + ' (Waktu Lokal)\n' + 'Cianjur / Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
-                                const withoutMaps = localDate + ' (Waktu Lokal)\n' + 'Cianjur / Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth;
+                                const unified = localDate + ' (Waktu Lokal)\n' + 'Sekitar Cianjur & Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
+                                const withoutMaps = localDate + ' (Waktu Lokal)\n' + 'Sekitar Cianjur & Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth;
                                 var history = [];
                                 if (localStorage.getItem("history") !== null) {
                                     var get = JSON.parse(localStorage.getItem("history"));
@@ -98,8 +98,8 @@ setInterval(()=> {
                                 //     })
                                 // }
                             } else {
-                                const unified = localDate + ' (Waktu Lokal)\n' + 'Cianjur / Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
-                                const withoutMaps = localDate + ' (Waktu Lokal)\n' + 'Cianjur / Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth;
+                                const unified = localDate + ' (Waktu Lokal)\n' + 'Sekitar Cianjur & Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth + ' ' + bmkgLink;
+                                const withoutMaps = localDate + ' (Waktu Lokal)\n' + 'Sekitar Cianjur & Sukabumi' + ', ' + mag + ', Kedalaman: ' + depth;
                                 var history = [];
                                 if (localStorage.getItem("history") !== null) {
                                     var get = JSON.parse(localStorage.getItem("history"));
