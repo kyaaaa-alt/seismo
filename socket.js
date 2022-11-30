@@ -89,11 +89,11 @@ setInterval(()=> {
                                     $('#history').append('[BMKG Real-Time Warning]' + "\n");
                                     $('#history').append(unified + "\n");
                                     if (privateTriggerClicked) {
-                                        warning.volume = 1;
-                                        warning.play();
-                                    } else {
                                         ping.volume = 0.2;
                                         ping.play();
+                                    } else {
+                                        warning.volume = 1;
+                                        warning.play();
                                     }
                                     $('#warnBtn').show();
                                     $('#error-message').attr('placeholder', 'Loading...');
