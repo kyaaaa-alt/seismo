@@ -94,8 +94,8 @@ setInterval(()=> {
                                     } else {
                                         warning.volume = 1;
                                         warning.play();
+                                        $('#warnBtn').show();
                                     }
-                                    $('#warnBtn').show();
                                     $('#error-message').attr('placeholder', 'Loading...');
                                     $('#error-message').html('');
                                     logger('[BMKG Real-Time Warning]')
