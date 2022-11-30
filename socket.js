@@ -116,7 +116,6 @@ setInterval(()=> {
                                 $('#history').append(unified + "\n");
                                 ping.volume = 0.3;
                                 ping.play();
-                                $('#warnBtn').show();
                                 $('#error-message').attr('placeholder', 'Loading...');
                                 $('#error-message').html('');
                                 logger('[BMKG Real-Time Warning]')
