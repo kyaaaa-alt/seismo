@@ -247,3 +247,11 @@
     animation: second-wave 1.8s linear 0.8s infinite;
  }
   
+.form-check-input:disabled {
+  height: 20px;
+  opacity: 1;
+  margin-top: -5px;
+}
+#cianjuralarm {
+  cursor: pointer;
+}

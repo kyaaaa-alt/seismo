@@ -200,6 +200,8 @@ if (md.mobile() != null || md.phone() != null || md.tablet() != null || md.os() 
   logger('Silahkan untuk menggunakan HP Android / iOS (iPhone/iPad)!');
   $('.canvas-container').hide();
   $('#settings').hide();
+  $('#desktop').show();
+  $('#maincontent').hide();
   $('.btn').hide();
   $('.alert').hide();
 }
@@ -401,6 +403,27 @@ if (localStorage.getItem("expDate") === null) {
 
 const expDate = new Date(Number(localStorage.getItem("expDate")))
 $('#expdate').html(expDate.toLocaleString('en-GB'))
+
+if (localStorage.getItem("cianjuralarm") === null) {
+  localStorage.setItem('cianjuralarm', 0);
+}
+
+if (localStorage.getItem("cianjuralarm") == 1) {
+  $('#cianjuralarmcheck').attr('checked', true)
+} else {
+  $('#cianjuralarmcheck').attr('checked', false)
+}
+
+$('#cianjuralarm').on('click', function() {
+  if ($('#cianjuralarmcheck').is(":checked")) {
+    $('#cianjuralarmcheck').attr('checked', false)
+    localStorage.setItem('cianjuralarm', 0);
+  } else {
+    $('#cianjuralarmcheck').attr('checked', true)
+    localStorage.setItem('cianjuralarm', 1);
+  }
+  $('#cianjuralarmcheck').is(":checked") ? console.log('checked') : console.log('not checked');
+})
 
 function stopWarn() {
   warning.pause();

@@ -1,10 +1,3 @@
-const privateTrigger = document.getElementById('privateTrigger');
-var privateTriggerClicked = false;
-privateTrigger.addEventListener('click', function handleClick() {
-  privateTriggerClicked = true;
-  $('#riwayatlabel').html('Riwayat Alarm');
-});
-
 let currentTimeStamp = null
 let localDate = null
 var x2js = new X2JS();
@@ -88,13 +81,13 @@ setInterval(()=> {
                                     $('#history').append(' ' + "\n");
                                     $('#history').append('[BMKG Real-Time Warning]' + "\n");
                                     $('#history').append(unified + "\n");
-                                    if (privateTriggerClicked) {
-                                        ping.volume = 0.2;
-                                        ping.play();
-                                    } else {
+                                    if ($('#cianjuralarmcheck').is(":checked") && localStorage.getItem("cianjuralarm") == '1') {
                                         warning.volume = 1;
                                         warning.play();
                                         $('#warnBtn').show();
+                                    } else {
+                                        ping.volume = 0.1;
+                                        ping.play();
                                     }
                                     $('#error-message').attr('placeholder', 'Loading...');
                                     $('#error-message').html('');
@@ -127,7 +120,7 @@ setInterval(()=> {
                                     $('#history').append(' ' + "\n");
                                     $('#history').append('[BMKG Real-Time Warning]' + "\n");
                                     $('#history').append(unified + "\n");
-                                    ping.volume = 0.2;
+                                    ping.volume = 0.1;
                                     ping.play();
                                     $('#error-message').attr('placeholder', 'Loading...');
                                     $('#error-message').html('');
@@ -162,7 +155,7 @@ setInterval(()=> {
                                 $('#history').append(' ' + "\n");
                                 $('#history').append('[BMKG Real-Time Warning]' + "\n");
                                 $('#history').append(unified + "\n");
-                                ping.volume = 0.2;
+                                ping.volume = 0.1;
                                 ping.play();
                                 $('#error-message').attr('placeholder', 'Loading...');
                                 $('#error-message').html('');
@@ -196,7 +189,7 @@ setInterval(()=> {
                             $('#history').append(' ' + "\n");
                             $('#history').append('[BMKG Real-Time Warning]' + "\n");
                             $('#history').append(unified + "\n");
-                            ping.volume = 0.2;
+                            ping.volume = 0.1;
                             ping.play();
                             $('#error-message').attr('placeholder', 'Loading...');
                             $('#error-message').html('');
@@ -232,7 +225,7 @@ setInterval(()=> {
                         $('#history').append(' ' + "\n");
                         $('#history').append('[BMKG Real-Time Warning]' + "\n");
                         $('#history').append(unified + "\n");
-                        ping.volume = 0.2;
+                        ping.volume = 0.1;
                         ping.play();
                         $('#error-message').attr('placeholder', 'Loading...');
                         $('#error-message').html('');
@@ -259,7 +252,7 @@ setInterval(()=> {
                     $('#history').append(' ' + "\n");
                     $('#history').append('[BMKG Real-Time Warning]' + "\n");
                     $('#history').append(unified + "\n");
-                    ping.volume = 0.2;
+                    ping.volume = 0.1;
                     ping.play();
                     $('#error-message').attr('placeholder', 'Loading...');
                     $('#error-message').html('');
@@ -293,7 +286,7 @@ setInterval(()=> {
                 $('#history').append(' ' + "\n");
                 $('#history').append('[BMKG Real-Time Warning]' + "\n");
                 $('#history').append(unified + "\n");
-                ping.volume = 0.2;
+                ping.volume = 0.1;
                 ping.play();
                 $('#error-message').attr('placeholder', 'Loading...');
                 $('#error-message').html('');
