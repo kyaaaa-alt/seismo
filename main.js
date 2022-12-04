@@ -445,3 +445,6 @@ if (md.os() != 'iOS') {
     .then((interests) => console.log("Current interests:", interests))
     .catch(console.error);
 }
+
+// Geocode Alarm Sedang Perbaikan
+localStorage.setItem('cianjuralarm', 0);
