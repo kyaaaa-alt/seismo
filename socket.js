@@ -86,7 +86,7 @@ setInterval(()=> {
                                         warning.play();
                                         $('#warnBtn').show();
                                     } else {
-                                        ping.volume = 0.1;
+                                        ping.volume = 0.03;
                                         ping.play();
                                     }
                                     $('#error-message').attr('placeholder', 'Loading...');
@@ -120,7 +120,7 @@ setInterval(()=> {
                                     $('#history').append(' ' + "\n");
                                     $('#history').append('[BMKG Real-Time Warning]' + "\n");
                                     $('#history').append(unified + "\n");
-                                    ping.volume = 0.1;
+                                    ping.volume = 0.03;
                                     ping.play();
                                     $('#error-message').attr('placeholder', 'Loading...');
                                     $('#error-message').html('');
@@ -155,7 +155,7 @@ setInterval(()=> {
                                 $('#history').append(' ' + "\n");
                                 $('#history').append('[BMKG Real-Time Warning]' + "\n");
                                 $('#history').append(unified + "\n");
-                                ping.volume = 0.1;
+                                ping.volume = 0.03;
                                 ping.play();
                                 $('#error-message').attr('placeholder', 'Loading...');
                                 $('#error-message').html('');
@@ -189,7 +189,7 @@ setInterval(()=> {
                             $('#history').append(' ' + "\n");
                             $('#history').append('[BMKG Real-Time Warning]' + "\n");
                             $('#history').append(unified + "\n");
-                            ping.volume = 0.1;
+                            ping.volume = 0.03;
                             ping.play();
                             $('#error-message').attr('placeholder', 'Loading...');
                             $('#error-message').html('');
@@ -225,7 +225,7 @@ setInterval(()=> {
                         $('#history').append(' ' + "\n");
                         $('#history').append('[BMKG Real-Time Warning]' + "\n");
                         $('#history').append(unified + "\n");
-                        ping.volume = 0.1;
+                        ping.volume = 0.03;
                         ping.play();
                         $('#error-message').attr('placeholder', 'Loading...');
                         $('#error-message').html('');
@@ -252,7 +252,7 @@ setInterval(()=> {
                     $('#history').append(' ' + "\n");
                     $('#history').append('[BMKG Real-Time Warning]' + "\n");
                     $('#history').append(unified + "\n");
-                    ping.volume = 0.1;
+                    ping.volume = 0.03;
                     ping.play();
                     $('#error-message').attr('placeholder', 'Loading...');
                     $('#error-message').html('');
@@ -286,7 +286,7 @@ setInterval(()=> {
                 $('#history').append(' ' + "\n");
                 $('#history').append('[BMKG Real-Time Warning]' + "\n");
                 $('#history').append(unified + "\n");
-                ping.volume = 0.1;
+                ping.volume = 0.03;
                 ping.play();
                 $('#error-message').attr('placeholder', 'Loading...');
                 $('#error-message').html('');

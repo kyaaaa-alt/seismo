@@ -28,6 +28,7 @@ function android() {
   warning.play();
   warning.pause();
   warning.currentTime = 0;
+  ping.volume = 0.03;
   ping.play();
   ping.pause();
   ping.currentTime = 0;
@@ -206,6 +207,46 @@ if (md.mobile() != null || md.phone() != null || md.tablet() != null || md.os() 
   $('.alert').hide();
 }
 
+$('#sele').on('change', function() {
+  if ($('#sele').val() == 'custom') {
+    const customModal = new bootstrap.Modal('#customModal', {
+      keyboard: false,
+      backdrop: 'static'
+    })
+    customModal.show();
+  }
+})
+
+if (localStorage.getItem("customx") === null) {
+  localStorage.setItem('customx', '0.3');
+}
+$("#customx").val(Number(localStorage.getItem('customx')))
+$("[name=customx]").val($('#customx').val())
+$("#customx").on("change input", function() {
+  $("[name=customx]").val($(this).val())
+  localStorage.setItem('customx', $(this).val())
+})
+
+if (localStorage.getItem("customy") === null) {
+  localStorage.setItem('customy', '0.3');
+}
+$("#customy").val(Number(localStorage.getItem('customy')))
+$("[name=customy]").val($('#customy').val())
+$("#customy").on("change input", function() {
+  $("[name=customy]").val($(this).val())
+  localStorage.setItem('customy', $(this).val())
+})
+
+if (localStorage.getItem("customz") === null) {
+  localStorage.setItem('customz', '0.3');
+}
+$("#customz").val(Number(localStorage.getItem('customz')))
+$("[name=customz]").val($('#customz').val())
+$("#customz").on("change input", function() {
+  $("[name=customz]").val($(this).val())
+  localStorage.setItem('customz', $(this).val())
+})
+
 function gyroAcceleration(event) {
     shift(samples.x, event.acceleration.x);
     shift(samples.y, event.acceleration.y);
@@ -245,6 +286,13 @@ function gyroAcceleration(event) {
       var px = 1.5;
       var py = 1.5;
       var pz = 1.6;
+    } else if ($('#sele').val() == 'custom') {
+      var x = Number('-' + localStorage.getItem('customx'));
+      var y = Number('-' + localStorage.getItem('customy'));
+      var z = Number('-' + localStorage.getItem('customz'));
+      var px = Number(localStorage.getItem('customx'));
+      var py = Number(localStorage.getItem('customx'));
+      var pz = Number(localStorage.getItem('customx'));
     }
     if (parseFloat(x) >= parseFloat(event.acceleration.x) || parseFloat(y) >= parseFloat(event.acceleration.y) || parseFloat(z) >= parseFloat(event.acceleration.z) || parseFloat(px) <= parseFloat(event.acceleration.x) || parseFloat(py) <= parseFloat(event.acceleration.y) || parseFloat(pz) <= parseFloat(event.acceleration.z)) {
       if (warning.paused) {

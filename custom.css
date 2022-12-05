@@ -26,6 +26,13 @@
     color: #ccc;
   } 
 
+  .card-outline {
+    background-color: transparent !important;
+    border: 1px solid #d3fcd2;
+    color: #d3fcd2;
+    border-radius: 10px;
+  }
+
   .btn-outline-custom {
     background-color: transparent !important;
     border: 1px solid #d3fcd2;
@@ -168,6 +175,17 @@
     border-color: #93af94 !important;
   }
 
+  input:disabled {
+    color: #d3fcd2 !important;
+    background-color: #495749 !important;
+    -webkit-text-fill-color: #d3fcd2!important;
+    opacity: 1 !important;/* required on iOS */
+    border-color: #93af94 !important;
+  }
+  
+  .mt-03 {
+    margin-top: 3px;
+  }
 
   @keyframes first-wave {
     0% {

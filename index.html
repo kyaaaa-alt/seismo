@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href="custom.css?v=1.5.10" rel="stylesheet">
+  <link href="custom.css?v=1.6.0" rel="stylesheet">
   <script src="mobile-detect.js"></script>
   <script src="NoSleep.min.js"></script>
   <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
@@ -87,6 +87,7 @@
           <option value="3">[Level 3] Normal</option>
           <option value="4">[Level 4] Sensitif Sedang</option>
           <option value="5">[Level 5] Sensitif Rendah</option>
+          <option value="custom">[Custom] Sesuaikan Sensitivitas</option>
         </select>
       </div>
     </div>
@@ -141,7 +142,7 @@
     <div class="text-center mb-4 mt-1">
       <small class="text-white" style="font-size: 11px;">Made with ❤️ by <a class="text-decoration-none text-white fw-bold"
           href="https://nauf.space/" target="_blank">M Naufal Azkia</a></small>
-      <small class="text-white d-block" style="font-size: 10px;">v1.5.10</small>
+      <small class="text-white d-block" style="font-size: 10px;">v1.6.0</small>
     </div>
   </div>
 
@@ -284,6 +285,62 @@
     </div>
   </div>
 
+  <!-- Custom Modal -->
+  <div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable container">
+      <div class="modal-content">
+        <div class="modal-body card-custom rounded p-0">
+          <p class="text-white text-center mt-3" style="font-size: 18px;font-weight:500;"><i class="bi bi-sliders"></i> <span id="riwayatlabel">Custom</span></p>
+          <div class="text-center">
+            <img class="w-50" src="image.png">
+          </div>
+          <div class="my-2 mx-2 p-2 card-outline">
+              <div class="d-flex justify-content-between">
+                <label class="text-white mt-03">Sumbu X</label>
+                <div><input type="text" name="customx" class="form-control form-control-sm" value="" disabled></div>
+              </div>
+
+              <input type="range" class="form-range" min="0.3" max="3" step="0.1" id="customx" value="0.3">
+              <div class="d-flex justify-content-between">
+                <small class="text-white" style="font-size:12px">Sangat Sensitif</small>
+                <small class="text-white" style="font-size:12px">Kurang Sensitif</small>
+              </div>
+          </div>
+
+          <div class="my-2 mx-2 p-2 card-outline">
+            <div class="d-flex justify-content-between">
+              <label class="text-white mt-03">Sumbu Y</label>
+              <div><input type="text" name="customy" class="form-control form-control-sm" value="" disabled></div>
+            </div>
+
+            <input type="range" class="form-range" min="0.3" max="3" step="0.1" id="customy" value="0.3">
+            <div class="d-flex justify-content-between">
+              <small class="text-white" style="font-size:12px">Sangat Sensitif</small>
+              <small class="text-white" style="font-size:12px">Kurang Sensitif</small>
+            </div>
+          </div>
+
+          <div class="my-2 mx-2 p-2 card-outline">
+            <div class="d-flex justify-content-between">
+              <label class="text-white mt-03">Sumbu Z</label>
+              <div><input type="text" name="customz" class="form-control form-control-sm" value="" disabled></div>
+            </div>
+
+            <input type="range" class="form-range" min="0.3" max="3" step="0.1" id="customz" value="0.3">
+            <div class="d-flex justify-content-between">
+              <small class="text-white" style="font-size:12px">Sangat Sensitif</small>
+              <small class="text-white" style="font-size:12px">Kurang Sensitif</small>
+            </div>
+          </div>
+        
+          <div style="text-align: center;">
+            <a class="btn btn-custom btn mb-3 mt-2" data-bs-dismiss="modal">Tutup</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <audio id="ping" src="dingdong.mp3"></audio>
   <audio id="warning" src="warning.mp3" loop></audio>
 
@@ -293,8 +350,8 @@
   <script src="moment-with-locales.min.js"></script>
   <script src="moment-timezone-with-data-10-year-range.js"></script>
   <script src="xml2json.min.js"></script>
-  <script src="main.js?v=1.5.10"></script>
-  <script src="socket.js?v=1.5.10"></script>
+  <script src="main.js?v=1.6.0"></script>
+  <script src="socket.js?v=1.6.0"></script>
 </body>
 
 </html>
